@@ -45,26 +45,26 @@ class LogParser:
         return filtered_lines, firstTimestamp, lastTimestamp
     
     def get_summary(self, filtered_lines, first_timestamp, last_timestamp):
-        print(f"\n📄 Total lines in file: {len(self.logs)}")
+        print(f"\n Total lines in file: {len(self.logs)}")
 
         if filtered_lines:
-            print(f"✅ Found {len(filtered_lines)} matching lines:\n")
+            print(f"Found {len(filtered_lines)} matching lines:\n")
             print("--- Filtered Lines ---")
             for line in filtered_lines:
                 print(line.strip())
             print("--- End of Filtered Lines ---\n")
         else:
-            print("ℹ️ No matching lines found in the file.")
+            print("No matching lines found in the file.")
 
         if first_timestamp and last_timestamp:
-            print(f"⏱ First timestamp: {first_timestamp}")
-            print(f"⏱ Last timestamp:  {last_timestamp}")
+            print(f"First timestamp: {first_timestamp}")
+            print(f"Last timestamp:  {last_timestamp}")
         else:
-            print("⚠️ No valid timestamps found.")
+            print("⚠No valid timestamps found.")
 
     def save_filtered_results(self, filtered_lines, auto_save=False, output_file="filteredResults.txt"):
         if not filtered_lines:
-            print("ℹ️ No filtered lines to save.")
+            print("No filtered lines to save.")
             return
 
         if auto_save:
@@ -76,11 +76,11 @@ class LogParser:
             try:
                 with open(output_file, 'w') as output:
                     output.writelines(filtered_lines)
-                print(f"💾 Filtered results saved to '{output_file}'.")
+                print(f"Filtered results saved to '{output_file}'.")
             except Exception as e:
-                print(f"❌ An error occurred while saving the file: {e}")
+                print(f"An error occurred while saving the file: {e}")
         else:
-            print("ℹ️ Save cancelled.")
+            print("Save cancelled.")
 
     def run(self, errors_only=False, auto_save=False, output_file="filteredResults.txt"):
         if not self.load_file():

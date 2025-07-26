@@ -60,7 +60,7 @@ class LogParser:
             print(f"First timestamp: {first_timestamp}")
             print(f"Last timestamp:  {last_timestamp}")
         else:
-            print("⚠No valid timestamps found.")
+            print("No valid timestamps found.")
 
     def save_filtered_results(self, filtered_lines, auto_save=False, output_file="filteredResults.txt"):
         if not filtered_lines:

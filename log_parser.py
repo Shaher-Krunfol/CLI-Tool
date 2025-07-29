@@ -11,7 +11,7 @@ class LogParser:
             start = time.time()
             result = func(*args, **kwargs)
             end = time.time()
-            print(f"\n⏱ Finished in {end - start:.2f} seconds")
+            print(f"\nFinished in {end - start:.2f} seconds")
             return result
         return wrapper
 
@@ -22,10 +22,10 @@ class LogParser:
                 for line in file:
                     yield line
         except PermissionError:
-            print(f"❌ Permission denied while trying to read {self.file_name}.")
+            print(f"Permission denied while trying to read {self.file_name}.")
             return
         except FileNotFoundError:
-            print(f"❌ File '{self.file_name}' not found.")
+            print(f"File '{self.file_name}' not found.")
             return
 
     # Filters while streaming
@@ -73,14 +73,14 @@ class LogParser:
 
         # Print summary
         print("\n--- SUMMARY ---")
-        print(f"📄 Total lines processed: {line_number}")
-        print(f"✅ Matches found: {match_count}")
-        print(f"💾 Matches saved to: {saved_file}")
+        print(f"Total lines processed: {line_number}")
+        print(f"Matches found: {match_count}")
+        print(f"Matches saved to: {saved_file}")
         if first_timestamp and last_timestamp:
-            print(f"⏱ First timestamp: {first_timestamp}")
-            print(f"⏱ Last timestamp:  {last_timestamp}")
+            print(f"First timestamp: {first_timestamp}")
+            print(f"Last timestamp:  {last_timestamp}")
         else:
-            print("⚠️ No valid timestamps found.")
+            print("⚠No valid timestamps found.")
 
 if __name__ == "__main__":
     import argparse
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
     args = parser_cli.parse_args()
 
-    # ✅ Parse levels into a list if provided, else None
+    # Parse levels into a list if provided, else None
     levels = args.levels.split(",") if args.levels else None
 
     parser = LogParser(args.file)

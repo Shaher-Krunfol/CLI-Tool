@@ -51,5 +51,5 @@ python log_parser.py server.log --levels ERROR,INFO /
 python log_parser.py server.log --levels WARNING --output warnings.txt
 
 ✅ Performance:
-Tested on a 1 GB log file – filtered all matching lines in ~5-9 seconds.
+Tested on a 1 GB log file – filtered all matching lines in ~5-10 seconds.
 

@@ -11,7 +11,7 @@ class LogParser:
             start = time.time()
             result = func(*args, **kwargs)
             end = time.time()
-            print(f"\nFinished in {end - start:.2f} seconds")
+            print(f"\n⏱ Finished in {end - start:.2f} seconds")
             return result
         return wrapper
 
@@ -22,10 +22,10 @@ class LogParser:
                 for line in file:
                     yield line
         except PermissionError:
-            print(f"Permission denied while trying to read {self.file_name}.")
+            print(f"❌ Permission denied while trying to read {self.file_name}.")
             return
         except FileNotFoundError:
-            print(f"File '{self.file_name}' not found.")
+            print(f"❌ File '{self.file_name}' not found.")
             return
 
     # Filters while streaming
@@ -54,14 +54,25 @@ class LogParser:
                         output.write(line)
                         match_count += 1
 
+                import re
                 # Timestamp detection
-                if line.startswith('[') and len(line) >= 20:
-                    timestamp = line.split(']')[0].strip('[]')
+                timestamp_patterns = [
+                    r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',  # 2025-07-29 16:48:22
+                    r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}',  # 2025/07/29 16:48:22
+                    r'[A-Z][a-z]{2} \d{2} \d{2}:\d{2}:\d{2}' # Jul 29 16:48:22
+                ]
+
+            for pattern in timestamp_patterns:
+                match = re.search(pattern, line)
+                if match:
+                    timestamp = match.group(0)
                     if not first_timestamp:
                         first_timestamp = timestamp
                     last_timestamp = timestamp
+                    break  # stop after first match
 
-        return line_number, match_count, first_timestamp, last_timestamp, output_file
+
+            return line_number, match_count, first_timestamp, last_timestamp, output_file
 
     @measure_time
     def run(self, levels=None, output_file="filteredResults.txt"):
@@ -73,14 +84,14 @@ class LogParser:
 
         # Print summary
         print("\n--- SUMMARY ---")
-        print(f"Total lines processed: {line_number}")
-        print(f"Matches found: {match_count}")
-        print(f"Matches saved to: {saved_file}")
+        print(f"📄 Total lines processed: {line_number}")
+        print(f"✅ Matches found: {match_count}")
+        print(f"💾 Matches saved to: {saved_file}")
         if first_timestamp and last_timestamp:
-            print(f"First timestamp: {first_timestamp}")
-            print(f"Last timestamp:  {last_timestamp}")
+            print(f"⏱ First timestamp: {first_timestamp}")
+            print(f"⏱ Last timestamp:  {last_timestamp}")
         else:
-            print("⚠No valid timestamps found.")
+            print("⚠️ No valid timestamps found.")
 
 if __name__ == "__main__":
     import argparse
@@ -96,7 +107,7 @@ if __name__ == "__main__":
 
     args = parser_cli.parse_args()
 
-    # Parse levels into a list if provided, else None
+    # ✅ Parse levels into a list if provided, else None
     levels = args.levels.split(",") if args.levels else None
 
     parser = LogParser(args.file)

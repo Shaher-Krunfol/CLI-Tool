@@ -1,5 +1,3 @@
-# log_parser.py (Advanced Streaming Version with --levels)
-
 class LogParser:
     def __init__(self, file_name):
         self.file_name = file_name
@@ -107,7 +105,7 @@ if __name__ == "__main__":
 
     args = parser_cli.parse_args()
 
-    # ✅ Parse levels into a list if provided, else None
+    # Parse levels into a list if provided, else None
     levels = args.levels.split(",") if args.levels else None
 
     parser = LogParser(args.file)
